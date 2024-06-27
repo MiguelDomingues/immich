@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:immich_mobile/entities/exif_info.entity.dart';
 import 'package:immich_mobile/entities/store.entity.dart';
 import 'package:immich_mobile/utils/hash.dart';
+import 'package:immich_mobile/utils/thumbnail_util.dart';
 import 'package:isar/isar.dart';
 import 'package:openapi/api.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -38,7 +39,10 @@ class Asset {
         stackParentId =
             remote.stackParentId == remote.id ? null : remote.stackParentId,
         stackCount = remote.stackCount,
-        thumbhash = remote.thumbhash;
+        thumbhash = remote.thumbhash,
+        altText = "" {
+    altText = getAltText(exifInfo, fileCreatedAt);
+  }
 
   Asset.local(AssetEntity local, List<int> hash)
       : localId = local.id,
@@ -56,13 +60,15 @@ class Asset {
         isTrashed = false,
         isOffline = false,
         stackCount = 0,
-        fileCreatedAt = local.createDateTime {
+        fileCreatedAt = local.createDateTime,
+        altText = "" {
     if (fileCreatedAt.year == 1970) {
       fileCreatedAt = fileModifiedAt;
     }
     if (local.latitude != null) {
       exifInfo = ExifInfo(lat: local.latitude, long: local.longitude);
     }
+    altText = getAltText(exifInfo, fileCreatedAt);
     _local = local;
     assert(hash.length == 20, "invalid SHA1 hash");
   }
@@ -90,6 +96,7 @@ class Asset {
     this.stackCount = 0,
     this.isOffline = false,
     this.thumbhash,
+    this.altText = "",
   });
 
   @ignore
@@ -159,6 +166,8 @@ class Asset {
   bool isTrashed;
 
   bool isOffline;
+
+  String altText;
 
   @ignore
   ExifInfo? exifInfo;
