@@ -1,4 +1,5 @@
 {
+  "about": "Tietoja",
   "account": "Tili",
   "account_settings": "Tilin asetukset",
   "acknowledge": "Tiedostan",
@@ -21,6 +22,9 @@
   "add_to": "Lisää...",
   "add_to_album": "Lisää albumiin",
   "add_to_shared_album": "Lisää jaettuun albumiin",
+  "added_to_archive": "Arkistoitu",
+  "added_to_favorites": "Lisätty suosikkeihin",
+  "added_to_favorites_count": "{count} lisätty suosikkeihin",
   "admin": {
     "add_exclusion_pattern_description": "Lisää mallit, jonka mukaan jätetään tiedostoja pois. Jokerimerkit *, ** ja ? ovat tuettuna. Jättääksesi pois kaikki tiedostot mistä tahansa löytyvästä kansiosta \"Raw\" käytä \"**/Raw/**\". Jättääksesi pois kaikki \". tif\" päätteiset tiedot, käytä \"**/*.tif\". Jättääksesi pois tarkan tiedostopolun, käytä \"/path/to/ignore/**\".",
     "authentication_settings": "Autentikointiasetukset",
@@ -872,5 +876,6 @@
   "welcome_to_immich": "",
   "year": "",
   "yes": "Kyllä",
-  "zoom_image": ""
+  "you_dont_have_any_shared_links": "Sinulla ei ole jaettuja linkkejä",
+  "zoom_image": "Zoomaa kuvaa"
 }
