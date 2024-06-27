@@ -214,12 +214,14 @@ Class | Method | HTTP request | Description
 *TrashApi* | [**restoreAssets**](doc//TrashApi.md#restoreassets) | **POST** /trash/restore/assets | 
 *TrashApi* | [**restoreTrash**](doc//TrashApi.md#restoretrash) | **POST** /trash/restore | 
 *UsersApi* | [**createProfileImage**](doc//UsersApi.md#createprofileimage) | **POST** /users/profile-image | 
+*UsersApi* | [**deleteLicense**](doc//UsersApi.md#deletelicense) | **DELETE** /users/me/license | 
 *UsersApi* | [**deleteProfileImage**](doc//UsersApi.md#deleteprofileimage) | **DELETE** /users/profile-image | 
 *UsersApi* | [**getMyPreferences**](doc//UsersApi.md#getmypreferences) | **GET** /users/me/preferences | 
 *UsersApi* | [**getMyUser**](doc//UsersApi.md#getmyuser) | **GET** /users/me | 
 *UsersApi* | [**getProfileImage**](doc//UsersApi.md#getprofileimage) | **GET** /users/{id}/profile-image | 
 *UsersApi* | [**getUser**](doc//UsersApi.md#getuser) | **GET** /users/{id} | 
 *UsersApi* | [**searchUsers**](doc//UsersApi.md#searchusers) | **GET** /users | 
+*UsersApi* | [**setLicense**](doc//UsersApi.md#setlicense) | **PUT** /users/me/license | 
 *UsersApi* | [**updateMyPreferences**](doc//UsersApi.md#updatemypreferences) | **PUT** /users/me/preferences | 
 *UsersApi* | [**updateMyUser**](doc//UsersApi.md#updatemyuser) | **PUT** /users/me | 
 *UsersAdminApi* | [**createUserAdmin**](doc//UsersAdminApi.md#createuseradmin) | **POST** /admin/users | 
@@ -317,6 +319,8 @@ Class | Method | HTTP request | Description
  - [JobStatusDto](doc//JobStatusDto.md)
  - [LibraryResponseDto](doc//LibraryResponseDto.md)
  - [LibraryStatsResponseDto](doc//LibraryStatsResponseDto.md)
+ - [LicenseKeyDto](doc//LicenseKeyDto.md)
+ - [LicenseResponseDto](doc//LicenseResponseDto.md)
  - [LogLevel](doc//LogLevel.md)
  - [LoginCredentialDto](doc//LoginCredentialDto.md)
  - [LoginResponseDto](doc//LoginResponseDto.md)

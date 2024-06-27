@@ -348,6 +348,10 @@ class ApiClient {
           return LibraryResponseDto.fromJson(value);
         case 'LibraryStatsResponseDto':
           return LibraryStatsResponseDto.fromJson(value);
+        case 'LicenseKeyDto':
+          return LicenseKeyDto.fromJson(value);
+        case 'LicenseResponseDto':
+          return LicenseResponseDto.fromJson(value);
         case 'LogLevel':
           return LogLevelTypeTransformer().decode(value);
         case 'LoginCredentialDto':

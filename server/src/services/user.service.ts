@@ -1,9 +1,10 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { DateTime } from 'luxon';
-import { SALT_ROUNDS } from 'src/constants';
+import { SALT_ROUNDS, clientLicensePublicKey } from 'src/constants';
 import { StorageCore, StorageFolder } from 'src/cores/storage.core';
 import { SystemConfigCore } from 'src/cores/system-config.core';
 import { AuthDto } from 'src/dtos/auth.dto';
+import { LicenseKeyDto, LicenseResponseDto } from 'src/dtos/license.dto';
 import { UserPreferencesResponseDto, UserPreferencesUpdateDto, mapPreferences } from 'src/dtos/user-preferences.dto';
 import { CreateProfileImageResponseDto, mapCreateProfileImageResponse } from 'src/dtos/user-profile.dto';
 import { UserAdminResponseDto, UserResponseDto, UserUpdateMeDto, mapUser, mapUserAdmin } from 'src/dtos/user.dto';
@@ -121,6 +122,35 @@ export class UserService {
       contentType: 'image/jpeg',
       cacheControl: CacheControl.NONE,
     });
+  }
+
+  async deleteLicense({ user }: AuthDto): Promise<void> {
+    await this.userRepository.deleteMetadata(user.id, UserMetadataKey.LICENSE);
+  }
+
+  async setLicense(auth: AuthDto, license: LicenseKeyDto): Promise<LicenseResponseDto> {
+    if (!license.licenseKey.startsWith('IMCL-')) {
+      throw new BadRequestException('Invalid license key');
+    }
+    const trimmedLicenseKey = license.licenseKey.slice(5);
+    const licenseValid = this.cryptoRepository.verifySha256(
+      trimmedLicenseKey,
+      license.activationKey,
+      clientLicensePublicKey,
+    );
+
+    if (licenseValid) {
+      await this.userRepository.upsertMetadata(auth.user.id, {
+        key: UserMetadataKey.LICENSE,
+        value: {
+          licenseKey: license.licenseKey,
+          activationKey: license.activationKey,
+          activatedAt: new Date(),
+        },
+      });
+    }
+
+    return { valid: licenseValid };
   }
 
   async handleUserSyncUsage(): Promise<JobStatus> {

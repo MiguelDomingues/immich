@@ -6540,6 +6540,71 @@
         ]
       }
     },
+    "/users/me/license": {
+      "delete": {
+        "operationId": "deleteLicense",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          },
+          {
+            "cookie": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "tags": [
+          "Users"
+        ]
+      },
+      "put": {
+        "operationId": "setLicense",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LicenseKeyDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LicenseResponseDto"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          },
+          {
+            "cookie": []
+          },
+          {
+            "api_key": []
+          }
+        ],
+        "tags": [
+          "Users"
+        ]
+      }
+    },
     "/users/me/preferences": {
       "get": {
         "operationId": "getMyPreferences",
@@ -8711,6 +8776,33 @@
         ],
         "type": "object"
       },
+      "LicenseKeyDto": {
+        "properties": {
+          "activationKey": {
+            "type": "string"
+          },
+          "licenseKey": {
+            "pattern": "/IM(SV|CL)(-[\\dA-Za-z]{4}){8}/",
+            "type": "string"
+          }
+        },
+        "required": [
+          "activationKey",
+          "licenseKey"
+        ],
+        "type": "object"
+      },
+      "LicenseResponseDto": {
+        "properties": {
+          "valid": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "valid"
+        ],
+        "type": "object"
+      },
       "LogLevel": {
         "enum": [
           "verbose",
@@ -9206,6 +9298,10 @@
           "inTimeline": {
             "type": "boolean"
           },
+          "license": {
+            "nullable": true,
+            "type": "object"
+          },
           "name": {
             "type": "string"
           },
@@ -9217,6 +9313,7 @@
           "avatarColor",
           "email",
           "id",
+          "license",
           "name",
           "profileImagePath"
         ],
@@ -11266,6 +11363,10 @@
           "isAdmin": {
             "type": "boolean"
           },
+          "license": {
+            "nullable": true,
+            "type": "object"
+          },
           "name": {
             "type": "string"
           },
@@ -11307,6 +11408,7 @@
           "email",
           "id",
           "isAdmin",
+          "license",
           "name",
           "oauthId",
           "profileImagePath",
@@ -11412,6 +11514,10 @@
           "id": {
             "type": "string"
           },
+          "license": {
+            "nullable": true,
+            "type": "object"
+          },
           "name": {
             "type": "string"
           },
@@ -11423,6 +11529,7 @@
           "avatarColor",
           "email",
           "id",
+          "license",
           "name",
           "profileImagePath"
         ],

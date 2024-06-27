@@ -1,10 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsBoolean, IsEmail, IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
-import { UserAvatarColor } from 'src/entities/user-metadata.entity';
+import { partial } from 'lodash';
+import { UserAvatarColor, UserMetadata, UserMetadataEntity, UserMetadataKey } from 'src/entities/user-metadata.entity';
 import { UserEntity, UserStatus } from 'src/entities/user.entity';
 import { getPreferences } from 'src/utils/preferences';
-import { Optional, ValidateBoolean, toEmail, toSanitized } from 'src/validation';
+import { Optional, toEmail, toSanitized, ValidateBoolean } from 'src/validation';
 
 export class UserUpdateMeDto {
   @Optional()
@@ -31,15 +32,20 @@ export class UserResponseDto {
   profileImagePath!: string;
   @ApiProperty({ enumName: 'UserAvatarColor', enum: UserAvatarColor })
   avatarColor!: UserAvatarColor;
+  license!: UserMetadata[UserMetadataKey.LICENSE] | null;
 }
 
 export const mapUser = (entity: UserEntity): UserResponseDto => {
+  const license = entity.metadata.find((item): item is UserMetadataEntity<UserMetadataKey.LICENSE> => {
+    return item.key === UserMetadataKey.LICENSE;
+  })?.value;
   return {
     id: entity.id,
     email: entity.email,
     name: entity.name,
     profileImagePath: entity.profileImagePath,
     avatarColor: getPreferences(entity).avatar.color,
+    license: license ?? null,
   };
 };
 

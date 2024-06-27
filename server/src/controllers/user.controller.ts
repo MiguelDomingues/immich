@@ -17,6 +17,7 @@ import {
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { NextFunction, Response } from 'express';
 import { AuthDto } from 'src/dtos/auth.dto';
+import { LicenseKeyDto, LicenseResponseDto } from 'src/dtos/license.dto';
 import { UserPreferencesResponseDto, UserPreferencesUpdateDto } from 'src/dtos/user-preferences.dto';
 import { CreateProfileImageDto, CreateProfileImageResponseDto } from 'src/dtos/user-profile.dto';
 import { UserAdminResponseDto, UserResponseDto, UserUpdateMeDto } from 'src/dtos/user.dto';
@@ -98,5 +99,17 @@ export class UserController {
   @Authenticated()
   async getProfileImage(@Res() res: Response, @Next() next: NextFunction, @Param() { id }: UUIDParamDto) {
     await sendFile(res, next, () => this.service.getProfileImage(id), this.logger);
+  }
+
+  @Put('me/license')
+  @Authenticated()
+  async setLicense(@Auth() auth: AuthDto, @Body() license: LicenseKeyDto): Promise<LicenseResponseDto> {
+    return this.service.setLicense(auth, license);
+  }
+
+  @Delete('me/license')
+  @Authenticated()
+  async deleteLicense(@Auth() auth: AuthDto): Promise<void> {
+    await this.service.deleteLicense(auth);
   }
 }
